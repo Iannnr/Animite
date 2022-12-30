@@ -37,6 +37,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.imashnake.animite.R
+import com.imashnake.animite.features.connectivity.NetworkListenerSnackbar
 import com.imashnake.animite.features.navigationbar.NavigationBar
 import com.imashnake.animite.features.searchbar.SearchBar
 import com.imashnake.animite.features.theme.AnimiteTheme
@@ -67,6 +68,8 @@ class MainActivity : ComponentActivity() {
                 }
 
                 MainScreen(Modifier.fillMaxSize())
+
+                NetworkListenerSnackbar()
             }
         }
     }

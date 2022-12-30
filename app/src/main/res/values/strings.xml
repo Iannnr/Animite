@@ -20,4 +20,6 @@
     <string name="search">Search</string>
     <string name="collapse">Collapse</string>
     <string name="close">Close</string>
+
+  <string name="connectivity_lost">Network connection lost, some features may not work</string>
 </resources>
