@@ -9,6 +9,8 @@ data class Search(
     val coverImage: String?,
     /** @see SearchQuery.Medium.title */
     val title: String?,
+    /** @see SearchQuery.Title.native */
+    val native: String?,
     /** @see SearchQuery.Medium.season */
     val season: Season,
     /** @see SearchQuery.Medium.seasonYear */
@@ -48,11 +50,10 @@ data class Search(
         id = query.id,
         coverImage = query.coverImage?.extraLarge,
         title = query.title?.romaji ?: query.title?.english ?: query.title?.native,
+        native = query.title?.native,
         season = query.season?.let { Season.valueOf(it.name) } ?: Season.UNKNOWN,
         seasonYear = query.seasonYear,
-        studios = if (query.studios?.nodes == null) { emptyList() } else {
-            query.studios.nodes.filter { it?.name != null }.map { it!!.name }
-        },
+        studios = query.studios?.nodes?.mapNotNull { it?.name }.orEmpty(),
         format = query.format?.let { Format.valueOf(it.name) } ?: Format.UNKNOWN,
         episodes = query.episodes
     )

@@ -42,12 +42,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.imashnake.animite.R
-import com.imashnake.animite.api.anilist.sanitize.search.Search
 import com.imashnake.animite.api.anilist.type.MediaType
 import com.imashnake.animite.core.Constants
 import com.imashnake.animite.core.extensions.landscapeCutoutPadding
 import com.imashnake.animite.core.ui.LocalPaddings
 import com.imashnake.animite.core.ui.MediaSmall
+import com.imashnake.animite.features.searchbar.domain.model.SearchResultUiModel
 import com.imashnake.animite.core.R as coreR
 import com.imashnake.animite.media.R as mediaR
 import com.imashnake.animite.navigation.R as navigationR
@@ -124,7 +124,7 @@ fun SearchFrontDrop(
 
 @Composable
 fun SearchList(
-    searchList: List<Search>,
+    searchList: List<SearchResultUiModel>,
     modifier: Modifier = Modifier,
     onItemClick: (Int) -> Unit
 ) {
@@ -155,7 +155,7 @@ fun SearchList(
 
 @Composable
 private fun SearchItem(
-    item: Search,
+    item: SearchResultUiModel,
     onClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -166,7 +166,7 @@ private fun SearchItem(
             .clickable { onClick(item.id) }
     ) {
         MediaSmall(
-            image = item.coverImage,
+            image = item.image,
             onClick = { onClick(item.id) },
             imageHeight = dimensionResource(mediaR.dimen.character_image_height),
             cardWidth = dimensionResource(mediaR.dimen.character_card_width),

@@ -18,21 +18,26 @@ import javax.inject.Inject
 class AnilistSearchRepository @Inject constructor(
     private val apolloClient: ApolloClient
 ) {
-    fun fetchSearch(
+
+    suspend fun fetchSearch(
         type: MediaType,
-        perPage: Int,
         search: String
-    ): Flow<Result<List<Search>>> {
+    ): List<Search> {
         return apolloClient
             .query(
                 SearchQuery(
                     type = Optional.presentIfNotNull(type),
-                    perPage = Optional.presentIfNotNull(perPage),
+                    perPage = Optional.presentIfNotNull(50),
                     search = Optional.presentIfNotNull(search)
                 )
             )
-            .fetchPolicy(FetchPolicy.CacheAndNetwork)
-            .toFlow()
-            .asResult { it.page!!.media.orEmpty().filterNotNull().map { query -> Search(query) } }
+            .fetchPolicy(FetchPolicy.CacheFirst)
+            .execute()
+            .dataAssertNoErrors
+            .page
+            ?.media
+            ?.filterNotNull()
+            ?.map { query -> Search(query) }
+            .orEmpty()
     }
 }
